@@ -13,15 +13,15 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export const setupTransactions = async () => {
   try {
-    await supabase.rpc('create_begin_transaction_procedure', {}, {
+    await supabase.rpc('begin_transaction', {}, {
       count: 'exact',
     });
     
-    await supabase.rpc('create_commit_transaction_procedure', {}, {
+    await supabase.rpc('commit_transaction', {}, {
       count: 'exact',
     });
     
-    await supabase.rpc('create_rollback_transaction_procedure', {}, {
+    await supabase.rpc('rollback_transaction', {}, {
       count: 'exact',
     });
     
