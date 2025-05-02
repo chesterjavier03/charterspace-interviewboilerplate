@@ -23,8 +23,8 @@ import InterfacePanel from './InterfacePanel';
 const nodeTypes = {};
 
 export default function SystemDiagram() {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [currentSystemId, setCurrentSystemId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -224,14 +224,12 @@ export default function SystemDiagram() {
     [setNodes, setEdges]
   );
 
-  // Initial data load
   useEffect(() => {
     fetchSystemHierarchy();
   }, [fetchSystemHierarchy]);
 
-  // Handle node double-click for navigation
   const onNodeDoubleClick = useCallback(
-    (event, node) => {
+    (_event: unknown, node: { id: string | null | undefined }) => {
       console.debug('Node double-clicked:', node);
       fetchSystemHierarchy(node.id);
     },
